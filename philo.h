@@ -8,4 +8,16 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef struct s_philo
+{
+  int	n_philo;
+  int	time_to_die;
+  int	time_to_eat;
+  int	time_to_sleep;
+  int	n_time_to_eat;
+  int	n_forks;
+} t_philo;
+
+int	ft_isdigit(int c);
+int	ft_atoi(const char *nptr);
 #endif

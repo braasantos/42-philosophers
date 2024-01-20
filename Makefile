@@ -1,5 +1,5 @@
 NAME = philo
-SRCS = philo.c
+SRCS = philo.c philo_utils.c
 HEADER = philo.h
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
@@ -17,7 +17,6 @@ $(NAME): $(OBJS)
 	$(COMPILER) -c $< -o $@
 
 clean:
-	@echo "Deleted chief"
 	$(RM) $(OBJS)
 
 fclean: clean
