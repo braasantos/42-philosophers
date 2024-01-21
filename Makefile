@@ -2,7 +2,7 @@ NAME = philo
 SRCS = philo.c philo_utils.c
 HEADER = philo.h
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 COMPILER = $(CC) $(CFLAGS)
 RM = rm -f
 OBJS = $(SRCS:.c=.o)
