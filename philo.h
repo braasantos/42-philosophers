@@ -11,6 +11,7 @@
 typedef struct s_philo
 {
   int	n_philo;
+  int	philo_id;
   int	time_to_die;
   int	time_to_eat;
   int	time_to_sleep;
@@ -20,4 +21,5 @@ typedef struct s_philo
 
 int	ft_isdigit(int c);
 int	ft_atoi(const char *nptr);
+void free_exit(t_philo *philo);
 #endif
