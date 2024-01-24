@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braasantos <braasantos@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bjorge-m <bjorge-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:03:18 by bjorge-m          #+#    #+#             */
-/*   Updated: 2024/01/23 14:41:01 by braasantos       ###   ########.fr       */
+/*   Updated: 2024/01/24 16:05:08 by bjorge-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,40 @@
 # include <string.h>
 # include <sys/time.h>
 # include <pthread.h>
+# define PHILO_MAX 300
 
-typedef struct timeval	t_timeval;
-
-typedef struct s_data
+typedef struct s_philo
 {
+	pthread_t		thread;
 	int				n_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				n_time_to_eat;
-	int				n_forks;
+	int				philo_id;
+	size_t			hungry;
 	size_t			time;
-	t_timeval		current_time;
-}				t_data;
-
-typedef struct s_philo
-{
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	chops[PHILO_MAX];
 	pthread_mutex_t	l_chop;
 	pthread_mutex_t	r_chop;
-	pthread_t		thread;
-	int				hungry;
-	int				think;
-	int				tired;
-	t_data			*dta;
-	int				philo_id;
 }				t_philo;
 
+typedef struct s_data
+{
+	pthread_mutex_t	mutex;
+	t_philo			*philosopher;
+	int				dead;
+}				t_data;
+
 int		ft_isdigit(int c);
-void	free_exit(t_data *philo, int n);
+size_t	get_time(void);
+void	init_philo(t_philo *philos, char **av);
 int		ft_atoi(const char *nptr);
-void	check_philo(t_data *philo);
-void	chop(t_philo *philos, t_data *dta);
-void	one_philo(t_data *philo, t_philo *philos);
-void	init_philo_data(t_data *philo, char **av, int ac);
+void	check_philo(t_philo *philo);
+void	free_exit(t_philo *philo, int n);
+void	free_exit(t_philo *philo, int n);
+void	chops(t_philo *philos);
+// void	one_philo(t_data *philo, t_philo *philos);
+void	init_philo_data(t_philo *philo, char **av);
 
 #endif
