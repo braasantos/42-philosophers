@@ -6,37 +6,23 @@
 /*   By: braasantos <braasantos@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:03:26 by bjorge-m          #+#    #+#             */
-/*   Updated: 2024/01/23 16:04:11 by braasantos       ###   ########.fr       */
+/*   Updated: 2024/01/24 17:34:18 by braasantos       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_philo_data(t_data *philo, char **av, int ac)
+void	init_philo_data(t_data *philo, char **av)
 {
 	philo->n_philo = ft_atoi(av[1]);
 	philo->time_to_die = ft_atoi(av[2]);
 	philo->time_to_eat = ft_atoi(av[3]);
 	philo->time_to_sleep = ft_atoi(av[4]);
 	philo->n_forks = philo->n_philo;
-	if (philo->n_philo == 18)
-		free_exit(philo, 0);
-	if (philo->n_forks == 18)
-		free_exit(philo, 0);
-	if (philo->time_to_die == 18)
-		free_exit(philo, 0);
-	if (philo->time_to_eat == 18)
-		free_exit(philo, 0);
-	if (philo->time_to_sleep == 18)
-		free_exit(philo, 0);
-	if (ac == 6)
-	{
+	if (av[5])
 		philo->n_time_to_eat = ft_atoi(av[5]);
-		if (philo->n_time_to_eat == 18)
-			free_exit(philo, 0);
-	}
 	else
-		philo->n_time_to_eat = 1;
+		philo->n_time_to_eat = -1;
 	check_philo(philo);
 }
 void	check_philo(t_data *philo)
