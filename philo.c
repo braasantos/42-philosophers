@@ -6,7 +6,7 @@
 /*   By: braasantos <braasantos@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:03:08 by bjorge-m          #+#    #+#             */
-/*   Updated: 2024/01/25 10:19:51 by braasantos       ###   ########.fr       */
+/*   Updated: 2024/01/25 10:22:14 by braasantos       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	wait_all(t_data *data)
 }
 void	*philo(void *arg)
 {
-	t_philo	*philo;
+	t_philo	*philosopher;
 
 	philo = (t_philo *)arg;
 	wait_all(philo->data);
@@ -135,3 +135,6 @@ int	main(int ac, char **av)
 	create_thread(&data);
 	return (0);
 }
+
+
+
