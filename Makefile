@@ -1,5 +1,5 @@
 NAME = philo
-SRCS = philo.c philo_utils.c
+SRCS = philo.c philo_utils.c check_and_init.c philo_utils3.c
 HEADER = philo.h
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g 
