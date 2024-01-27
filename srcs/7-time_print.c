@@ -6,7 +6,7 @@ size_t	get_time(void)
 
 	if (gettimeofday(&time, NULL))
 		printf("gettimeofday() error\n");
-	return (time.tv_sec * 1e3 + time.tv_usec / 1e3); // 1000
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000)); // 1000
 }
 
 size_t	ft_usleep(size_t time)
@@ -23,9 +23,16 @@ void	ft_status(int n, t_philo *philo)
 {
 	size_t	curr_time;
 
-	safe_mutex(&philo->data->write_mutex, LOCK);
+	safe_mutex(&philo->data->mutex, LOCK);
+	if (philo->data->died >= 1 || philo->data->all_ate == philo->data->n_philo)
+	{
+		safe_mutex(&philo->data->mutex, UNLOCK);
+		return ;
+	}
+	safe_mutex(&philo->data->mutex, UNLOCK);
 	curr_time = get_time() - philo->data->starting_time;
-	if (n == 1 || n == 2)
+	safe_mutex(&philo->data->write_mutex, LOCK);
+	if (n == 1)
 		printf("%zu %d has taken a fork\n", curr_time, philo->philo_id);
 	else if (n == 3)
 		printf("%zu %d is eating\n",curr_time, philo->philo_id);

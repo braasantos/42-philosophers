@@ -38,10 +38,11 @@ typedef struct s_philo
 {
 	int				philo_id;
 	size_t			last_meal;
-	int				meals_count;
+	size_t				meals_count;
 	int				dead;
 	t_data			*data;
 	pthread_t		thread;
+	pthread_mutex_t				philo_mutex;
 	t_fork	*l_fork;
 	t_fork	*r_fork;
 }				t_philo;
@@ -53,9 +54,13 @@ typedef struct s_data
 {
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	write_mutex;
+	pthread_mutex_t death_mutex;
 	pthread_mutex_t	_mutex;
 	pthread_t		observer;
 	size_t				n_philo;
+	size_t					all_ate;
+	int					full;
+	size_t				j;
 	int					died;
 	size_t				time_to_die;
 	size_t				time_to_eat;
@@ -116,11 +121,12 @@ void	safe_pthread(pthread_t *thread, void *(*args)(void *),
 void	create_thread(t_data *data);
 
 /*
-* The routine funtion and the action function "Think" "Eat"
+* The routine funtion and the action functions "Think" "Eat" "Sleep"
 */
 void	*philo(void *arg);
-void	ft_thinking(t_philo *philo);
-void	ft_eat(t_philo *philo);
+int	ft_thinking(t_philo *philo);
+int	ft_eat(t_philo *philo);
+int	ft_sleeping(t_philo *philo);
 
 /*
 * Write the current status of the philosopher
@@ -158,4 +164,15 @@ int	check_dead(t_data *data);
 * Join all threads created
 */
 void	join_threads(t_data *data);
+
+/*
+* Check if each philosopher has eaten the amout n of meals
+*/
+int	check_n_meals(t_data *data);
+
+
+/*
+* Simple function to make then grab the forks based on position
+*/
+int	grab_forks(t_philo *philo);
 #endif

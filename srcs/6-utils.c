@@ -37,25 +37,24 @@ void	safe_mutex(pthread_mutex_t *mutex, t_opcode opcode)
 {
 	if (opcode == LOCK)
 	{
-		if (pthread_mutex_lock(mutex) != 0)
+		if (pthread_mutex_lock(mutex))
 			print_error(6);
 	}
 	else if (opcode == UNLOCK)
 	{
-		if (pthread_mutex_unlock(mutex) != 0)
+		if (pthread_mutex_unlock(mutex))
 			print_error(6);
 	}
 	else if (opcode == INIT)
 	{
-		if (pthread_mutex_init(mutex, NULL) != 0)
+		if (pthread_mutex_init(mutex, NULL))
 			print_error(6);
 	}
 	else if (opcode == DESTROY)
 	{
-		pthread_mutex_destroy(mutex);
+		if(pthread_mutex_destroy(mutex))
+			print_error(6);
 	}
-	else
-		print_error(6);
 }
 
 void	safe_pthread(pthread_t *thread, void *(*args)(void *),
@@ -63,19 +62,12 @@ void	safe_pthread(pthread_t *thread, void *(*args)(void *),
 {
 	if (opcode == CREATE)
 	{
-		if(pthread_create(thread, NULL, args, data) != 0)
+		if(pthread_create(thread, NULL, args, data))
 			print_error(6);
 	}
 	else if (opcode == JOIN)
 	{
-		if (pthread_join(*thread, NULL) != 0)
+		if (pthread_join(*thread, NULL))
 			print_error(6);
 	}
-	else if (opcode == DETACH)
-	{
-		if (pthread_detach(*thread) != 0)
-			print_error(6);
-	}
-	else
-		print_error(6);
 }

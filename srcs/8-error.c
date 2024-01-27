@@ -34,10 +34,13 @@ void	clean(t_data *data)
 	while (i < data->n_philo)
 	{	
 		safe_mutex(&data->forks[i].fork, DESTROY);
+		safe_mutex(&data->philosopher[i].philo_mutex, DESTROY);
 		i++;
 	}
 	safe_mutex(&data->write_mutex, DESTROY);
+	safe_mutex(&data->death_mutex, DESTROY);
+	safe_mutex(&data->mutex, DESTROY);
 	free(data->forks);
 	free(data->philosopher);
-	exit(0);
+	return ;
 }
