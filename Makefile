@@ -10,7 +10,7 @@ srcs/8-error.c
 HEADER = inc/philo.h
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g 
- LDFLAGS = -pthread -fsanitize=thread 
+ LDFLAGS = -pthread #-fsanitize=thread 
 COMPILER = $(CC) $(CFLAGS)
 RM = rm -f
 OBJS = $(SRCS:.c=.o)

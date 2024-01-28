@@ -6,7 +6,10 @@ void	create_thread(t_data *data)
 
 	i = -1;
 	while (++i < data->n_philo)
+	{
 		safe_pthread(&data->philosopher[i].thread, &philo, &data->philosopher[i], CREATE);
+		usleep(1000);
+	}
 	safe_pthread(&data->observer, &control_philos, data, CREATE);
 }
 
