@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjorge-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 14:38:58 by bjorge-m          #+#    #+#             */
+/*   Updated: 2024/01/29 14:43:29 by bjorge-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -10,7 +21,7 @@
 # include <pthread.h>
 # include <limits.h>
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef enum e_opcode
 {
@@ -38,13 +49,13 @@ typedef struct s_philo
 {
 	int				philo_id;
 	size_t			last_meal;
-	size_t				meals_count;
+	size_t			meals_count;
 	int				dead;
 	t_data			*data;
 	pthread_t		thread;
-	pthread_mutex_t				philo_mutex;
-	t_fork	*l_fork;
-	t_fork	*r_fork;
+	pthread_mutex_t	philo_mutex;
+	t_fork			*l_fork;
+	t_fork			*r_fork;
 }				t_philo;
 
 /* 
@@ -54,29 +65,28 @@ typedef struct s_data
 {
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	write_mutex;
-	pthread_mutex_t death_mutex;
+	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	_mutex;
 	pthread_t		observer;
-	size_t				n_philo;
-	size_t					all_ate;
-	int					full;
-	size_t				j;
-	int					died;
-	size_t				time_to_die;
-	size_t				time_to_eat;
-	size_t				time_to_sleep;
-	size_t				n_time_to_eat;
+	size_t			n_philo;
+	size_t			all_ate;
+	int				full;
+	size_t			j;
+	int				died;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	size_t			n_time_to_eat;
 	size_t			starting_time;
-	size_t				end_time;
+	size_t			end_time;
 	t_philo			*philosopher;
 	t_fork			*forks;
 }				t_data;
 
-
 /*
 * Check the command line arguments and initialize the data struct
 */
-void	check_args(char **av, t_data  *data);
+void	check_args(char **av, t_data *data);
 void	parse_args(t_data *data, char **av);
 
 /*
@@ -87,7 +97,7 @@ void	print_error(int n);
 /*
 * Utils
 */
-int	ft_isdigit(int c);
+int		ft_isdigit(int c);
 long	ft_atol(const char *nptr);
 
 /*
@@ -114,7 +124,7 @@ void	get_forks(t_philo *philo, t_fork *forks, int position);
 void	*safe_malloc(size_t bytes);
 void	safe_mutex(pthread_mutex_t *mutex, t_opcode opcode);
 void	safe_pthread(pthread_t *thread, void *(*args)(void *),
-		void *data, t_opcode opcode);
+			void *data, t_opcode opcode);
 /*
 * Create the thread for each philosopher
 */
@@ -124,9 +134,9 @@ void	create_thread(t_data *data);
 * The routine funtion and the action functions "Think" "Eat" "Sleep"
 */
 void	*philo(void *arg);
-int	ft_thinking(t_philo *philo);
-int	ft_eat(t_philo *philo);
-int	ft_sleeping(t_philo *philo);
+int		ft_thinking(t_philo *philo);
+int		ft_eat(t_philo *philo);
+int		ft_sleeping(t_philo *philo);
 
 /*
 * Write the current status of the philosopher
@@ -158,7 +168,7 @@ void	*control_philos(void *arg);
 /*
 * Check if a philosopher is dead based on conditions
 */
-int	check_dead(t_data *data);
+int		check_dead(t_data *data);
 
 /*
 * Join all threads created
@@ -168,11 +178,15 @@ void	join_threads(t_data *data);
 /*
 * Check if each philosopher has eaten the amout n of meals
 */
-int	check_n_meals(t_data *data);
-
+int		check_n_meals(t_data *data);
 
 /*
 * Simple function to make then grab the forks based on position
 */
-int	grab_forks(t_philo *philo);
+int		grab_forks(t_philo *philo);
+
+/*
+* Simple function to drop the forks on reverse order as they picked them up
+*/
+void	drop_forks(t_philo *philo);
 #endif

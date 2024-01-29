@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   6-observer.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjorge-m <bjorge-m@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 14:31:33 by bjorge-m          #+#    #+#             */
+/*   Updated: 2024/01/29 14:53:29 by bjorge-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 void	*control_philos(void *arg)
 {
- 	t_data	*data;
+	t_data	*data;
 
- 	data = (t_data *)arg;
-	while(1)
-		if(check_dead(data) == 1 || check_n_meals(data) == 1)
+	data = (t_data *)arg;
+	while (1)
+		if (check_dead(data) == 1 || check_n_meals(data) == 1)
 			return (NULL);
- 	return (NULL);
+	return (NULL);
 }
 
 int	check_dead(t_data *data)
@@ -17,7 +29,7 @@ int	check_dead(t_data *data)
 	size_t	i;
 
 	i = 0;
-	while(i < data->n_philo)
+	while (i < data->n_philo)
 	{
 		safe_mutex(&data->philosopher[i].philo_mutex, LOCK);
 		curr_time = get_time() - data->philosopher[i].last_meal;
@@ -35,6 +47,7 @@ int	check_dead(t_data *data)
 	}
 	return (0);
 }
+
 int	check_n_meals(t_data *data)
 {
 	size_t	j;
@@ -52,37 +65,12 @@ int	check_n_meals(t_data *data)
 	return (0);
 }
 
-int	grab_forks(t_philo *philo)
-{
-	safe_mutex(&philo->data->mutex, LOCK);
-	if (philo->data->died >= 1 || philo->data->all_ate == philo->data->n_philo)
-	{
-		safe_mutex(&philo->data->mutex, UNLOCK);
-		return (1);
-	}
-	safe_mutex(&philo->data->mutex, UNLOCK);
-	if (philo->philo_id % 2 == 0)
-	{
-	safe_mutex(&philo->r_fork->fork, LOCK);
-	ft_status(1, philo);
-	safe_mutex(&philo->l_fork->fork, LOCK);
-	ft_status(1, philo);
-	}
-	else
-	{
-		safe_mutex(&philo->l_fork->fork, LOCK);
-		ft_status(1, philo);
-		safe_mutex(&philo->r_fork->fork, LOCK);
-		ft_status(1, philo);
-	}
-	return (0);
-}
 void	join_threads(t_data *data)
 {
 	size_t	i;
 
 	i = 0;
-	safe_pthread(&data->observer,NULL, NULL, JOIN);
+	safe_pthread(&data->observer, NULL, NULL, JOIN);
 	while (i < data->n_philo)
 	{
 		safe_pthread(&data->philosopher[i].thread, NULL, NULL, JOIN);

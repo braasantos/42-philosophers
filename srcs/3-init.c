@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   3-init.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjorge-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 14:28:59 by bjorge-m          #+#    #+#             */
+/*   Updated: 2024/01/29 14:29:21 by bjorge-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 void	data_init(t_data *data)
@@ -29,7 +41,7 @@ void	data_init(t_data *data)
 void	init_philo(t_data *data)
 {
 	size_t	i;
-	t_philo *philo;
+	t_philo	*philo;
 
 	i = 0;
 	while (i < data->n_philo)
@@ -46,11 +58,7 @@ void	init_philo(t_data *data)
 
 void	get_forks(t_philo *philo, t_fork *forks, int position)
 {
-	philo->l_fork = &forks[(position + 1) % philo->data->n_philo];
-	philo->r_fork = &forks[position];
-	if (philo->philo_id % 2 == 0)
-	{
-		philo->l_fork = &forks[position];
+	philo->l_fork = &forks[position];
+	if (philo->data->n_philo != 1)
 		philo->r_fork = &forks[(position + 1) % philo->data->n_philo];
-	}
 }

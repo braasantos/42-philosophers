@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   2-parse.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjorge-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 14:27:18 by bjorge-m          #+#    #+#             */
+/*   Updated: 2024/01/29 14:28:38 by bjorge-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
-void	check_args(char **av, t_data  *data)
+void	check_args(char **av, t_data *data)
 {
-	if (ft_atol(av[1])== 18 || ft_atol(av[1])== 0)
+	if (ft_atol(av[1]) == 18 || ft_atol(av[1]) == 0)
 		print_error(1);
-	if (ft_atol(av[2])== 18 || ft_atol(av[2])== 0)
+	if (ft_atol(av[2]) == 18 || ft_atol(av[2]) == 0)
 		print_error(2);
-	if (ft_atol(av[3])== 18 || ft_atol(av[3])== 0)
+	if (ft_atol(av[3]) == 18 || ft_atol(av[3]) == 0)
 		print_error(3);
-	if (ft_atol(av[4])== 18 || ft_atol(av[4])== 0)
+	if (ft_atol(av[4]) == 18 || ft_atol(av[4]) == 0)
 		print_error(4);
 	if (av[5])
 	{
-		if (ft_atol(av[5])== 18 || ft_atol(av[5])== 0)
+		if (ft_atol(av[5]) == 18 || ft_atol(av[5]) == 0)
 			print_error(5);
 	}
 	parse_args(data, av);

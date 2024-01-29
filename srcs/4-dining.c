@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   4-dining.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjorge-m <bjorge-m@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 14:29:36 by bjorge-m          #+#    #+#             */
+/*   Updated: 2024/01/29 15:28:25 by bjorge-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 void	create_thread(t_data *data)
 {
-	size_t			i;
+	size_t	i;
 
 	i = -1;
 	while (++i < data->n_philo)
 	{
-		safe_pthread(&data->philosopher[i].thread, &philo, &data->philosopher[i], CREATE);
-		usleep(1000);
+		safe_pthread(&data->philosopher[i].thread, 
+			&philo, &data->philosopher[i], CREATE);
 	}
 	safe_pthread(&data->observer, &control_philos, data, CREATE);
 }
@@ -27,7 +39,7 @@ void	*philo(void *arg)
 	}
 	if (philosopher->philo_id % 2 == 0)
 		usleep(2000);
-	while(philosopher->data->died == 0)
+	while (philosopher->data->died == 0)
 	{
 		if (grab_forks(philosopher) == 1)
 			return (NULL);
@@ -40,6 +52,7 @@ void	*philo(void *arg)
 	}
 	return (NULL);
 }
+
 int	ft_sleeping(t_philo *philo)
 {
 	safe_mutex(&philo->data->mutex, LOCK);
@@ -59,9 +72,9 @@ int	ft_eat(t_philo *philo)
 	safe_mutex(&philo->data->mutex, LOCK);
 	if (philo->data->died >= 1 || philo->data->all_ate == philo->data->n_philo)
 	{
-		safe_mutex(&philo->data->mutex, UNLOCK);
 		safe_mutex(&philo->l_fork->fork, UNLOCK);
 		safe_mutex(&philo->r_fork->fork, UNLOCK);
+		safe_mutex(&philo->data->mutex, UNLOCK);
 		return (1);
 	}
 	safe_mutex(&philo->data->mutex, UNLOCK);
@@ -78,8 +91,7 @@ int	ft_eat(t_philo *philo)
 	safe_mutex(&philo->data->mutex, UNLOCK);
 	safe_mutex(&philo->philo_mutex, UNLOCK);
 	ft_usleep(philo->data->time_to_eat);
-	safe_mutex(&philo->l_fork->fork, UNLOCK);
-	safe_mutex(&philo->r_fork->fork, UNLOCK);
+	drop_forks(philo);
 	return (0);
 }
 

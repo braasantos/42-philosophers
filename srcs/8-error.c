@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   8-error.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjorge-m <bjorge-m@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 14:36:03 by bjorge-m          #+#    #+#             */
+/*   Updated: 2024/01/29 15:32:35 by bjorge-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 void	print_error(int n)
@@ -32,7 +44,7 @@ void	clean(t_data *data)
 
 	i = 0;
 	while (i < data->n_philo)
-	{	
+	{
 		safe_mutex(&data->forks[i].fork, DESTROY);
 		safe_mutex(&data->philosopher[i].philo_mutex, DESTROY);
 		i++;
